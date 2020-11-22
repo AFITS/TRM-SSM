@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!-- 配置mapper,mybatis通过使用mapper实现dao接口 -->
+<mapper namespace="org.nwafu.trm.dao.ClassroomDao">
+
+    <!--通过用户名检查用户存在-->
+    <select id="checkClassroomIdExist" resultType="java.lang.Integer" parameterType="java.lang.String">
+        SELECT COUNT(classroom_id) FROM classroom WHERE classroom_id = #{classroomId}
+    </select>
+
+    <!--教室Id获取教室实体-->
+    <select id="getClassroomById" resultType="ClassroomBean" parameterType="java.lang.String">
+        SELECT
+        classroom_id as "classroomId",
+        classroom_projector as "projector",
+        classroom_blackboard as "blackboard",
+        classroom_address as "address",
+        classroom_maxNum as "maxNum"
+        FROM classroom WHERE classroom_id = #{classroomId}
+    </select>
+
+</mapper>

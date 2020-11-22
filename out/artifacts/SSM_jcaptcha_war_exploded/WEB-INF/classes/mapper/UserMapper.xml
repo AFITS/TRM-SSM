@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!-- 配置mapper,mybatis通过使用mapper实现dao接口 -->
+<mapper namespace="org.nwafu.trm.dao.UserDao">
+
+    <sql id="userParams">
+        user_id as "userId",
+        user_name as "userName",
+        user_pwd as "userPwd",
+        user_num as "userNum",
+        user_phone as "userPhone",
+        user_image as "userImage",
+        user_address as "userAddress"
+    </sql>
+
+    <select id="checkLoginNameAndPwd" resultType="java.lang.Integer" parameterType="java.lang.String">
+        SELECT COUNT(user_name) FROM user WHERE user_name = #{userName} and user_pwd = #{userPwd}
+    </select>
+
+    <!--通过手机号检查用户存在-->
+    <select id="checkPhoneRight" resultType="java.lang.Integer" parameterType="java.lang.String">
+        SELECT COUNT(user_phone) FROM user WHERE user_phone = #{userPhone}
+    </select>
+
+    <!--通过用户名检查用户存在-->
+    <select id="checkUserNameExist" resultType="java.lang.Integer" parameterType="java.lang.String">
+        SELECT COUNT(user_name) FROM user WHERE user_name = #{userName}
+    </select>
+
+
+    <!--用户名获取用户实体-->
+    <select id="getUserByName" resultType="UserBean" parameterType="java.lang.String">
+        SELECT
+        <include refid="userParams"></include>
+        FROM user WHERE user_name = #{userName}
+    </select>
+
+    <!--用户名获取用户实体-->
+    <select id="getUserByPhone" resultType="UserBean" parameterType="java.lang.String">
+        SELECT
+        <include refid="userParams"></include>
+        FROM user
+        WHERE user_phone = #{userPhone}
+    </select>
+
+    <!-- 新增用户 -->
+    <insert id="addUser" parameterType="org.nwafu.trm.model.UserBean">
+            INSERT INTO user
+            (user_name,user_pwd,user_num)
+            VALUES
+            (#{userName},#{userPwd},#{userNum})
+    </insert>
+
+
+    <!--    <select id="loginGetUser" resultType="UserBean" parameterType="java.lang.String">-->
+    <!--        SELECT-->
+    <!--         user_name as "userName",-->
+    <!--         user_pwd as "userPwd",-->
+    <!--         user_phone as "userPhone",-->
+    <!--         user_image as "userImage",-->
+    <!--         user_address as "userAddress"-->
+    <!--         FROM user WHERE user_name = #{userName} and user_pwd = #{userPwd}-->
+    <!--    </select>-->
+
+
+    <!--    &lt;!&ndash; 查找用户，通过id、email、userName、phone &ndash;&gt;-->
+    <!--    <select id="findByEmail" resultType="java.lang.Integer" parameterType="java.lang.String">-->
+    <!--        SELECT COUNT(email) FROM user WHERE email = #{email}-->
+    <!--    </select>-->
+
+    <!--    <select id="findByUser" resultType="java.lang.Integer" parameterType="java.lang.String">-->
+    <!--        SELECT COUNT(username) FROM user WHERE user_name = #{username}-->
+    <!--    </select>-->
+
+    <!--    &lt;!&ndash; 查找用户，通过id、email、userName、phone &ndash;&gt;-->
+    <!--    <select id="findByName" resultType="UserBean" parameterType="java.lang.String">-->
+    <!--        SELECT * FROM USER WHERE user_name = #{username}-->
+    <!--    </select>-->
+
+    <!--    &lt;!&ndash; 新增用户 &ndash;&gt;-->
+    <!--    <insert id="addUser" parameterType="com.xunge.springemp.model.User">-->
+    <!--        INSERT INTO user-->
+    <!--        (email,username,password)-->
+    <!--        VALUES-->
+    <!--        (#{email},#{username},#{password})-->
+    <!--    </insert>-->
+
+
+    <!--<select id="getAllUser" resultType="User" >
+        select * from employee
+    </select>
+
+
+
+    &lt;!&ndash; 删除用户 &ndash;&gt;
+    <delete id="deleteUser" parameterType="java.lang.String" >
+        DELETE FROM EMPLOYEE WHERE userId = #{userId}
+    </delete>
+
+    &lt;!&ndash; 解雇员工 &ndash;&gt;
+    <update id="fireUser" parameterType="java.lang.String">
+        UPDATE EMPLOYEE SET userRole=9 WHERE userId=#{userId}
+    </update>-->
+    <!--
+        &lt;!&ndash; 管理员更改用户信息 &ndash;&gt;
+        <update id="updateUser" parameterType="UserCustom">
+            UPDATE EMPLOYEE SET
+            userName=#{userName},
+            grpId=(select grpId from projGroup where grpName=#{grpName}),
+            userRole=#{userRole}
+
+            WHERE userId=#{userId}
+        </update>
+
+        <update id="updateUserSelf" parameterType="User">
+            UPDATE EMPLOYEE SET
+            userName=#{userName},
+            userPwd=#{userPwd}
+
+            WHERE userId=#{userId}
+        </update>-->
+</mapper>

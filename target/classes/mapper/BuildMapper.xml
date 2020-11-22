@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!-- 配置mapper,mybatis通过使用mapper实现dao接口 -->
+<mapper namespace="org.nwafu.trm.dao.BuildDao">
+
+    <!--查询：按照名字-->
+    <select id="findBuildMessageByName" resultType="BuildBean" parameterType="java.lang.String">
+        SELECT
+        build_id            AS "buildId",
+        build_name          AS "buildName",
+        build_kind          AS "buildKind",
+        build_address       AS "buildAddress",
+        build_longitude     AS "longitude",
+        build_latitude      AS "latitude",
+        build_classroom_num AS "buildClassroomNum",
+        build_message       AS "buildMessage"
+        FROM build
+        WHERE build_name LIKE #{searchName}
+    </select>
+
+    <!--查询：按照类型-->
+    <select id="findBuildMessageByKind" resultType="BuildBean" parameterType="java.lang.String">
+        SELECT
+        build_id            AS "buildId",
+        build_name          AS "buildName",
+        build_kind          AS "buildKind",
+        build_address       AS "buildAddress",
+        build_longitude     AS "longitude",
+        build_latitude      AS "latitude",
+        build_classroom_num AS "buildClassroomNum",
+        build_message       AS "buildMessage"
+        FROM build
+        WHERE build_kind LIKE #{searchName}
+    </select>
+
+    <!--查询：所有-->
+    <select id="findAllBuildMessage" resultType="BuildBean" parameterType="java.lang.String">
+        SELECT
+        build_id            AS "buildId",
+        build_name          AS "buildName",
+        build_kind          AS "buildKind",
+        build_address       AS "buildAddress",
+        build_longitude     AS "longitude",
+        build_latitude      AS "latitude",
+        build_classroom_num AS "buildClassroomNum",
+        build_message       AS "buildMessage"
+        FROM build
+    </select>
+
+    <!-- 删除：根据id -->
+    <delete id="deleteBuildMessage" parameterType="java.lang.String">
+        DELETE
+        FROM build
+        WHERE
+        build_id = #{buildId}
+    </delete>
+
+    <!-- 新增建筑信息：所有信息-->
+    <insert id="insertBuildMessage" parameterType="BuildBean">
+        INSERT
+        INTO build
+        (build_id,build_name,build_kind,build_address,build_longitude,build_latitude,build_classroom_num,build_message)
+        VALUES
+        (#{buildId}, #{buildName}, #{buildKind}, #{buildAddress}, #{longitude}, #{latitude}, #{buildClassroomNum}, #{buildMessage})
+    </insert>
+
+    <!-- 修改建筑信息：所有信息-->
+    <update id="updateBuildMessage" parameterType="BuildBean">
+        UPDATE
+        build
+        SET
+        build_id            = #{buildId},
+        build_name          = #{buildName},
+        build_kind          = #{buildKind},
+        build_address       = #{buildAddress},
+        build_longitude     = #{longitude},
+        build_latitude      = #{latitude},
+        build_classroom_num = #{buildClassroomNum},
+        build_message       = #{buildMessage}
+        WHERE
+        build_id = #{buildId}
+    </update>
+
+
+</mapper>

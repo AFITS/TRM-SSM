@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- 配置mapper,mybatis通过使用mapper实现dao接口 -->
+<mapper namespace="org.nwafu.trm.dao.SearchInfoDao">
+
+      <select id="findSearchInfo" resultType="SearchBean" parameterType="java.lang.String">
+        SELECT
+        search_id as "searchId",
+        search_name as "searchName",
+        search_kind as "searchKind",
+        search_num as "searchNum",
+        search_date as "searchDate",
+        search_belong as "searchBelong"
+        FROM search
+        WHERE search_name = #{searchName}
+    </select>
+
+</mapper>

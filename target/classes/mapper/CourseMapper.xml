@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!-- 配置mapper,mybatis通过使用mapper实现dao接口 -->
+<mapper namespace="org.nwafu.trm.dao.CourseDao">
+
+    <sql id="courseMessage">
+        course_id           AS "courseId",
+        course_name         AS "courseName",
+        course_teacher      AS "courseTeacher",
+        course_college      AS "courseCollege",
+        course_kind         AS "courseKind",
+        course_credits      AS "courseCredits",
+        course_address      AS "courseAddress",
+        course_book         AS "courseBook",
+        course_info         AS "courseInfo"
+    </sql>
+
+    <!--查询：按照老师名称-->
+    <select id="findCourseByTeacherName" resultType="CourseBean" parameterType="java.lang.String">
+        SELECT
+        <include refid="courseMessage"></include>
+        FROM course
+        WHERE course_teacher LIKE #{searchName}
+    </select>
+
+    <!--查询：按照学院-->
+    <select id="findCourseByCollege" resultType="CourseBean" parameterType="java.lang.String">
+        SELECT
+        <include refid="courseMessage"></include>
+        FROM course
+        WHERE course_college LIKE CONCAT(#{searchName}, '%')
+    </select>
+
+    <!--查询：按照地址-->
+    <select id="findCourseByAddress" resultType="CourseBean" parameterType="java.lang.String">
+        SELECT
+        <include refid="courseMessage"></include>
+        FROM course
+        WHERE course_address LIKE CONCAT(#{searchName}, '%')
+    </select>
+
+    <!--查询：所有-->
+    <select id="findAllCourseMessage" resultType="CourseBean" parameterType="java.lang.String">
+        SELECT
+        <include refid="courseMessage"></include>
+        FROM course
+    </select>
+
+    <!-- 删除：根据id -->
+    <delete id="deleteCourseMessage" parameterType="java.lang.String">
+        DELETE
+        FROM course
+        WHERE
+        course_id = #{courseId}
+    </delete>
+
+    <!-- 新增建筑信息：所有信息-->
+    <insert id="insertCourseMessage" parameterType="CourseBean">
+        INSERT
+        INTO course
+        (course_id,course_name,course_teacher,course_college,course_kind,course_credits,course_address,course_book,course_info)
+        VALUES
+        (#{courseId}, #{courseName}, #{courseTeacher}, #{courseCollege}, #{courseKind}, #{courseCredits}, #{courseAddress},
+         #{courseBook}, #{courseInfo})
+    </insert>
+
+    <!-- 修改建筑信息：所有信息-->
+    <update id="updateCourseMessage" parameterType="CourseBean">
+        UPDATE
+        course
+        SET
+        course_id           = #{classId},
+        course_name         = #{classroomId},
+        course_teacher      = #{courseTeacher},
+        course_college      = #{courseCollege},
+        course_kind         = #{courseKind},
+        course_credits      = #{courseCredits},
+        course_address      = #{courseAddress},
+        course_book         = #{courseBook},
+        course_info         = #{courseInfo}
+        WHERE
+        course_id = #{classId}
+    </update>
+
+
+
+</mapper>

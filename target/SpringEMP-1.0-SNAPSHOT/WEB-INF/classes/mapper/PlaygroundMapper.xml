@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!-- 配置mapper,mybatis通过使用mapper实现dao接口 -->
+<mapper namespace="org.nwafu.trm.dao.PlaygroundDao">
+
+    <!--教室Id获取运动场地实体-->
+    <select id="getPlaygroundByName" resultType="PlaygroundBean" parameterType="java.lang.String">
+        SELECT
+        playground_id           AS "playgroundId",
+        playground_name         AS "playgroundName",
+        playground_kind         AS "playgroundKind",
+        playground_equipment    AS "playgroundEquipment",
+        playground_attribute    AS "playgroundAttribute",
+        playground_head         AS "playgroundHead",
+        playground_phone        AS "playgroundPhone",
+        playground_info         AS "playgroundInfo"
+        FROM playground
+        WHERE
+        playground_name LIKE CONCAT(#{playgroundName}, '%')
+    </select>
+
+</mapper>

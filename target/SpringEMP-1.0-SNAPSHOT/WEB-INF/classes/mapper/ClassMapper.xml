@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!-- 配置mapper,mybatis通过使用mapper实现dao接口 -->
+<mapper namespace="org.nwafu.trm.dao.ClassDao">
+
+    <!--教室Id获取教室实体-->
+    <select id="findFreeClass" resultType="ClassBean" parameterType="java.lang.String">
+        SELECT
+        class_id        AS "classId",
+        classroom_id    AS "classroomId",
+        course_id       AS "courseId",
+        course_name     AS "courseName",
+        class_date      AS "classDate",
+        class_time      AS "classTime"
+        FROM class
+        WHERE classroom_id LIKE CONCAT(#{address}, '%')
+        AND class_date LIKE #{date}
+        AND class_time NOT REGEXP #{time}
+    </select>
+
+    <select id="getClassroomClass" resultType="ClassBean" parameterType="java.lang.String">
+        SELECT
+        class_id        AS "classId",
+        classroom_id    AS "classroomId",
+        course_id       AS "courseId",
+        course_name     AS "courseName",
+        class_date      AS "classDate",
+        class_time      AS "classTime"
+        FROM class
+        WHERE class_date LIKE #{date}
+        AND classroom_id LIKE #{classroomId}
+    </select>
+
+
+    <!--      - - - -     以下为后端    - - - -          -->
+    <!--      - - - -     以下为后端    - - - -          -->
+    <!--      - - - -     以下为后端    - - - -          -->
+
+    <sql id="classMessage">
+        class_id            AS "classId",
+        classroom_id        AS "classroomId",
+        course_id           AS "courseId",
+        course_name         AS "courseName",
+        class_date          AS "classDate",
+        class_time          AS "classTime",
+        teacher_name        AS "teacherName"
+    </sql>
+
+    <!--查询：按照教室ID-->
+    <select id="findClassByClassroomId" resultType="ClassBean" parameterType="java.lang.String">
+        SELECT
+        <include refid="classMessage"></include>
+        FROM class
+        WHERE classroom_id LIKE #{searchName}
+    </select>
+
+    <!--查询：按照日期-->
+    <select id="findClassByClassDate" resultType="ClassBean" parameterType="java.lang.String">
+        SELECT
+        <include refid="classMessage"></include>
+        FROM class
+        WHERE class_date LIKE #{searchName}
+    </select>
+
+    <!--查询：按照时间-->
+    <select id="findClassByClassTime" resultType="ClassBean" parameterType="java.lang.String">
+        SELECT
+        <include refid="classMessage"></include>
+        FROM class
+        WHERE class_time LIKE #{searchName}
+    </select>
+
+    <!--查询：所有-->
+    <select id="findAllClassMessage" resultType="ClassBean" parameterType="java.lang.String">
+        SELECT
+        <include refid="classMessage"></include>
+        FROM class
+    </select>
+
+    <!-- 删除：根据id -->
+    <delete id="deleteClassMessage" parameterType="java.lang.String">
+        DELETE
+        FROM class
+        WHERE
+        class_id = #{classId}
+    </delete>
+
+    <!-- 新增建筑信息：所有信息-->
+    <insert id="insertClassMessage" parameterType="ClassBean">
+        INSERT
+        INTO class
+        (class_id,classroom_id,course_id,course_name,class_date,class_time,teacher_name)
+        VALUES
+        (#{classId}, #{classroomId}, #{courseId}, #{courseName}, #{classDate}, #{classTime}, #{teacherName})
+    </insert>
+
+    <!-- 修改建筑信息：所有信息-->
+    <update id="updateClassMessage" parameterType="ClassBean">
+        UPDATE
+        class
+        SET
+        class_id            = #{classId},
+        classroom_id        = #{classroomId},
+        course_id           = #{courseId},
+        course_name         = #{courseName},
+        class_date          = #{classDate},
+        class_time          = #{classTime},
+        teacher_name        = #{teacherName}
+        WHERE
+        class_id = #{classId}
+    </update>
+
+
+</mapper>

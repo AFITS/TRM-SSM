@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!-- 配置mapper,mybatis通过使用mapper实现dao接口 -->
+<mapper namespace="org.nwafu.trm.dao.TeacherDao">
+
+
+    <!--教室Id获取教室实体-->
+    <select id="getTeacherByName" resultType="TeacherBean" parameterType="java.lang.String">
+        SELECT
+        teacher_id as "teacherId",
+        teacher_image as "teacherImage",
+        teacher_name as "teacherName",
+        teacher_college as "teacherCollege",
+        teacher_major as "teacherMajor",
+        teacher_address as "teacherAddress",
+        teacher_office as "teacherOffice",
+        teacher_phone as "teacherPhone",
+        teacher_email as "teacherEmail",
+        teacher_info as "teacherInfo"
+        FROM teacher WHERE teacher_name = #{teacherName}
+    </select>
+
+
+
+
+</mapper>

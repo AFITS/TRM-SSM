@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -30,6 +31,8 @@ public class ClassController {
     @RequestMapping(value = "/findClassroomClass")
     @ResponseBody
     public BaseBean getClassroomClass(String classroomId, String date) {
+        ArrayList<String> list = new ArrayList<>();
+        list.add("SSS");
         return classService.getClassroomClass(classroomId, date);
     }
 
